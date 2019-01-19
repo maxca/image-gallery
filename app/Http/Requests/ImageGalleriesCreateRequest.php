@@ -24,8 +24,8 @@ class ImageGalleriesCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id',
-            'images.*'   => 'required|mimes:jpeg,png|max:10240', //10mb
+            'user_id'  => 'required|exists:users,id',
+            'images.*' => 'required|mimes:jpeg,png|max:10240', //10mb
         ];
     }
 }

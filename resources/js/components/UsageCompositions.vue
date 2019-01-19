@@ -12,10 +12,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="data in lists">
-                <td>{{ data.type }}</td>
-                <td>{{ data.total }}</td>
-                <td>{{ data.size }}</td>
+            <tr v-for="item in lists">
+                <td>{{ item.type }}</td>
+                <td>{{ item.total }}</td>
+                <td>{{ item.size }}</td>
             </tr>
             </tbody>
         </table>
