@@ -17,7 +17,9 @@ class CheckAuth
     {
         if(auth()->check() === true) {
             $request->merge(['user_id' => auth()->user()->id]);
+            return $next($request);
         }
-        return $next($request);
+        return abort(401);
+
     }
 }
