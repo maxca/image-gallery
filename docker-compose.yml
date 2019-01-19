@@ -1,0 +1,82 @@
+version: '2.1'
+
+services:
+  app:
+    image: maxca789/apachephp72composer
+    container_name: peerpower-test
+    restart: always
+    ports:
+      - "8407:80"
+    volumes:
+      - .:/var/www/html
+    mem_limit: 1024m
+    networks:
+      - default
+    cap_add:
+      - SYS_PTRACE
+    depends_on:
+      - mysql
+      - redis-server
+  mysql:
+    restart: always
+    image: mariadb:10.3
+    container_name: peerpower-mariadb
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./store/:/var/lib/mysql
+    mem_limit: 512m
+    networks:
+      - default
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=local
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+  mysql-admin:
+    restart: always
+    image: phpmyadmin/phpmyadmin:edge-4.8
+    container_name: peerpower-phpmyadmin
+    ports:
+      - "8002:80"
+    mem_limit: 512m
+    networks:
+      - default
+    depends_on:
+      - mysql
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: root
+
+  redis-server:
+    restart: always
+    image: redis:4.0
+    container_name: peerpower-redis-server
+    command: /bin/bash -c 'redis-server --appendonly yes'
+    sysctls:
+      - net.core.somaxconn=65535
+    ports:
+      - "6390:6379"
+    volumes:
+      - ./redis:/data
+    mem_limit: 96m
+    networks:
+      - default
+volumes:
+  mysql:
+    driver: local
+  redis:
+    driver: local
+
+networks:
+  default:
+    name: peerpower-network
+    driver: bridge
