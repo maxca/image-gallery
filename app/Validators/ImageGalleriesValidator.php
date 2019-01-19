@@ -20,8 +20,6 @@ class ImageGalleriesValidator extends LaravelValidator
     protected $rules = [
         ValidatorInterface::RULE_CREATE => [
             'user_id' => 'required',
-            'name'    => 'required',
-            'type'    => 'required',
         ],
         ValidatorInterface::RULE_UPDATE => [],
     ];

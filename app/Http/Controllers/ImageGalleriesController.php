@@ -46,7 +46,7 @@ class ImageGalleriesController extends Controller
     public function index()
     {
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $imageGalleries = $this->repository->all();
+        $imageGalleries = $this->repository->orderBy('id','desc')->all();
 
         return response()->json([
             'data' => $imageGalleries,

@@ -21,6 +21,11 @@ docker exec -it peerpower-test npm run dev | npm run watch
 ``
 docker exec -it peerpower-test comomposer install 
 ``
+## Migration 
+
+``
+docker exec -it peerpower-test php artisan migrate 
+``
 
 
 ## Unit test 
