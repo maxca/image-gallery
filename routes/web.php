@@ -15,17 +15,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::routes();
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('/images','ImageGalleriesController')->middleware('check.auth');
 
-Route::resource('/images', 'ImageGalleriesController')->middleware('check.auth');
 Route::get('usage-compositions', 'ImageGalleriesController@getUsageComposition')->middleware('check.auth');
 Route::get('usage-overview', 'ImageGalleriesController@getUsageOverview')->middleware('check.auth');
 
+
 # get view gallery
 Route::get('gallery', 'ImageGalleriesController@renderWebGallery')->middleware('check.auth');
-
 
 
